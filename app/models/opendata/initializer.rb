@@ -33,6 +33,12 @@ module Opendata
     Cms::Role.permission :edit_private_opendata_datasets
     Cms::Role.permission :delete_other_opendata_datasets
     Cms::Role.permission :delete_private_opendata_datasets
+
+    Cms::Role.permission :release_other_opendata_datasets
+    Cms::Role.permission :release_private_opendata_datasets
+    Cms::Role.permission :approve_other_opendata_datasets
+    Cms::Role.permission :approve_private_opendata_datasets
+
     Cms::Role.permission :read_other_opendata_apps
     Cms::Role.permission :read_private_opendata_apps
     Cms::Role.permission :edit_other_opendata_apps

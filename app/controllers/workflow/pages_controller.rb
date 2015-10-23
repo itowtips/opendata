@@ -60,11 +60,14 @@ class Workflow::PagesController < ApplicationController
 
       if @item.finish_workflow?
         @item.workflow_state = @model::WORKFLOW_STATE_APPROVE
-        if @item.release_date
-          @item.state = "ready"
-        else
-          @item.state = "public"
-          @item.release_date = nil
+        @item.state = "public"
+
+        if @item.respond_to?(:release_date)
+          if @item.release_date
+            @item.state = "ready"
+          else
+            @item.release_date = nil
+          end
         end
       end
 
@@ -81,7 +84,7 @@ class Workflow::PagesController < ApplicationController
           args = { f_uid: @cur_user._id, t_uid: @item.workflow_user_id,
                    site: @cur_site, page: @item,
                    url: params[:url], comment: params[:remand_comment] }
-          Workflow::Mailer.approve_mail(args).deliver_now
+          Workflow::Mailer.approve_mail(args).deliver_now if args[:t_uid]
           @item.delete if @item.try(:branch?) && @item.state == "public"
         end
 
@@ -102,7 +105,7 @@ class Workflow::PagesController < ApplicationController
           args = { f_uid: @cur_user._id, t_uid: @item.workflow_user_id,
                    site: @cur_site, page: @item,
                    url: params[:url], comment: params[:remand_comment] }
-          Workflow::Mailer.remand_mail(args).deliver_now
+          Workflow::Mailer.remand_mail(args).deliver_now if args[:t_uid]
         end
         render json: { workflow_state: @item.workflow_state }
       else
@@ -110,17 +113,4 @@ class Workflow::PagesController < ApplicationController
       end
     end
 
-    def branch_create
-      raise "400" if @item.branch?
-
-      @item.cur_node = @item.parent
-      if @item.branches.blank?
-        copy = @item.new_clone
-        copy.master = @item
-        copy.save
-      end
-
-      @items = @item.branches
-      render :branch, layout: "ss/ajax"
-    end
 end

@@ -9,10 +9,11 @@ class Opendata::Agents::Nodes::Dataset::ResourceController < ApplicationControll
     def set_dataset
       @dataset_path = @cur_path.sub(/\/resource\/.*/, ".html")
 
-      @dataset = Opendata::Dataset.site(@cur_site).public.
+      dataset = Opendata::Dataset.site(@cur_site).
         filename(@dataset_path).
         first
-
+      @dataset = dataset if dataset.public?
+      @dataset = dataset if @preview
       raise "404" unless @dataset
     end
 

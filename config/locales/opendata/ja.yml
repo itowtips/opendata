@@ -238,6 +238,7 @@ ja:
       opendata/rdf_store: RDFストア
       opendata/url_rdf_store: RDFストア
       opendata/comment: コメント
+      opendata/mypage_setting: マイページ設定
 
   cms:
     nodes:
@@ -287,6 +288,10 @@ ja:
     edit_private_opendata_ideas: アイデアの編集（所有）
     delete_other_opendata_ideas: アイデアの削除（全て）
     delete_private_opendata_ideas: アイデアの削除（所有）
+    release_other_opendata_datasets: データセットの公開（全て）
+    release_private_opendata_datasets: データセットの公開（所有）
+    approve_other_opendata_datasets: データセットの承認（全て）
+    approve_private_opendata_datasets: データセットの承認（所有）
 
   mongoid:
     models:
@@ -396,6 +401,8 @@ ja:
         header_labels: タイトル
         class: RDFクラス
         column_types: 列設定
+      opendata/addon/mypage_setting:
+        public_workflow_route: ワークフロー
 
   tooltip:
     opendata/dataset:

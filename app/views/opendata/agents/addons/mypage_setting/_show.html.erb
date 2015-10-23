@@ -1,0 +1,10 @@
+<dl class="see mypage-setting">
+  <dt>データセット承認</dt>
+  <dd><%= @item.dataset_workflow_route.name rescue "使用しない" %></dd>
+
+  <dt>アプリマーケット承認</dt>
+  <dd><%= @item.app_workflow_route.name rescue "使用しない" %></dd>
+
+  <dt>アイデア承認</dt>
+  <dd><%= @item.idea_workflow_route.name rescue "使用しない" %></dd>
+</dl>

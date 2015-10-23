@@ -1,10 +1,13 @@
 <%= node_navi do %>
 
-<nav class="main-menu">
+<nav class="sub-menu">
   <header><h1><%= t("modules.opendata") %></h1></header>
   <div>
     <% if @cur_node.route == "opendata/dataset" %>
       <%= link_to :"mongoid.models.opendata/dataset", opendata_datasets_path, class: "icon-node" %>
+      <div class="narrow-page">
+        <%= link_to :"非公開",   opendata_datasets_closed_path, class: "icon-node" %>
+      </div>
       <%= link_to :"mongoid.models.opendata/dataset_group", opendata_dataset_groups_path, class: "icon-node" %>
       <%= link_to :"mongoid.models.opendata/license", opendata_licenses_path, class: "icon-node" %>
       <%= link_to :"mongoid.models.opendata/crawl", opendata_crawls_path, class: "icon-node" %>
@@ -27,5 +30,12 @@
   </div>
 </nav>
 
-<% end %>
+<nav class="sub-menu">
+  <header><h1>承認</h1></header>
+  <div>
+    <%= link_to :"依頼されたもの",  opendata_datasets_approve_path, class: "icon-node" %>
+    <%= link_to :"申請したもの",  opendata_datasets_request_path, class: "icon-node" %>
+  </div>
+</nav>
 
+<% end %>

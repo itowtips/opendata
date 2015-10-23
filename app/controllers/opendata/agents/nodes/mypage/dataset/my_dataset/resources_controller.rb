@@ -9,6 +9,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
   before_action :set_dataset
   before_action :set_model
   before_action :set_item, only: [:show, :edit, :update, :delete, :destroy]
+  before_action :set_workflow
 
   protected
     def dataset
@@ -28,6 +29,20 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
     def set_item
       @item = dataset.resources.find params[:id]
       @item_url = "#{@resource_url}#{@item.id}/"
+    end
+
+    def set_workflow
+      @cur_site = Cms::Site.find(@cur_site.id)
+      @route = @cur_site.dataset_workflow_route
+    end
+
+    def set_status
+      status = "closed"
+      status = "request" if @route && params[:request].present?
+      status = "public"  if !@route && params[:publish_save].present?
+
+      @item.status = status
+      @item.workflow = { member: @cur_member, route: @route, workflow_reset: true }
     end
 
     def fix_params
@@ -80,7 +95,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
 
     def create
       @item = @dataset.resources.new get_params
-
+      set_status
       if @item.save
         redirect_to "#{@dataset_url}resources/", notice: t("views.notice.saved")
       else
@@ -94,7 +109,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
 
     def update
       @item.attributes = get_params
-
+      set_status
       if @item.update
         redirect_to "#{@dataset_url}resources/#{@item.id}/", notice: t("views.notice.saved")
       else
