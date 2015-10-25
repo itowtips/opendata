@@ -410,9 +410,9 @@ ja:
         class: RDFクラス
         column_types: 列設定
       opendata/addon/mypage_setting:
-        dataset_workflow_route: データセットワークフロー
-        app_workflow_route: アプリワークフロー
-        idea_workflow_route: アイデアワークフロー
+        dataset_workflow_route: データセット承認
+        app_workflow_route: アプリ承認
+        idea_workflow_route: アイデア承認
 
   tooltip:
     opendata/dataset:

@@ -19,6 +19,9 @@
       <%= link_to :"mongoid.models.opendata/license", opendata_licenses_path, class: "icon-node" %>
     <% elsif @cur_node.route == "opendata/idea" %>
       <%= link_to :"mongoid.models.opendata/idea", opendata_ideas_path, class: "icon-node" %>
+      <div class="narrow-page">
+        <%= link_to :"非公開",   opendata_ideas_closed_path, class: "icon-node" %>
+      </div>
     <% else %>
       <% Opendata::Node::Dataset.site(@cur_site).each do |item| %>
       <%= link_to item.name, opendata_datasets_path(@cur_site.host, item), class: "icon-node" %>
@@ -47,6 +50,14 @@
     <div>
       <%= link_to :"依頼されたもの",  opendata_apps_approve_path, class: "icon-node" %>
       <%= link_to :"申請したもの",  opendata_apps_request_path, class: "icon-node" %>
+    </div>
+  </nav>
+<% elsif @cur_node.route == "opendata/idea" %>
+  <nav class="sub-menu">
+    <header><h1>承認</h1></header>
+    <div>
+      <%= link_to :"依頼されたもの",  opendata_ideas_approve_path, class: "icon-node" %>
+      <%= link_to :"申請したもの",  opendata_ideas_request_path, class: "icon-node" %>
     </div>
   </nav>
 <% end %>
