@@ -1,5 +1,6 @@
 class Opendata::App
   include Cms::Model::Page
+  include Workflow::Addon::Approver
   include Opendata::Addon::Appfile
   include Opendata::Addon::Category
   include Opendata::Addon::Area
@@ -170,6 +171,18 @@ class Opendata::App
 
       criteria = criteria.where license: params[:license] if params[:license].present?
 
+      criteria = search_poster(params, criteria)
+
+      criteria
+    end
+
+    def search_poster(params, criteria)
+      if params[:poster].present?
+        code = {}
+        cond = { :workflow_member_id.exists => true } if params[:poster] == "public"
+        cond = { :workflow_member_id => nil } if params[:poster] == "admin"
+        criteria = criteria.where(cond)
+      end
       criteria
     end
 

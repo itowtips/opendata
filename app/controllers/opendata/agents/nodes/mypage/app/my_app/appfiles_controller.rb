@@ -9,6 +9,7 @@ class Opendata::Agents::Nodes::Mypage::App::MyApp::AppfilesController < Applicat
   before_action :set_app
   before_action :set_model
   before_action :set_item, only: [:show, :edit, :update, :delete, :destroy]
+  before_action :set_workflow
 
   protected
     def app
@@ -28,6 +29,20 @@ class Opendata::Agents::Nodes::Mypage::App::MyApp::AppfilesController < Applicat
     def set_item
       @item = app.appfiles.find params[:id]
       @item_url = "#{@appfile_url}#{@item.id}/"
+    end
+
+    def set_workflow
+      @cur_site = Cms::Site.find(@cur_site.id)
+      @route = @cur_site.app_workflow_route
+    end
+
+    def set_status
+      status = "closed"
+      status = "request" if @route && params[:request].present?
+      status = "public"  if !@route && params[:publish_save].present?
+
+      @item.status = status
+      @item.workflow = { member: @cur_member, route: @route, workflow_reset: true }
     end
 
     def fix_params
@@ -73,6 +88,7 @@ class Opendata::Agents::Nodes::Mypage::App::MyApp::AppfilesController < Applicat
 
     def create
       @item = @app.appfiles.new get_params
+      set_status
 
       if @item.save
         redirect_to "#{@app_url}appfiles/", notice: t("views.notice.saved")
@@ -87,6 +103,7 @@ class Opendata::Agents::Nodes::Mypage::App::MyApp::AppfilesController < Applicat
 
     def update
       @item.attributes = get_params
+      set_status
 
       if @item.update
         redirect_to "#{@app_url}appfiles/#{@item.id}/", notice: t("views.notice.saved")

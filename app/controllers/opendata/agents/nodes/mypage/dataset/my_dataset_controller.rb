@@ -28,7 +28,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDatasetController < Applicatio
       @route = @cur_site.dataset_workflow_route
     end
 
-    def set_state
+    def set_status
       @item.workflow_member_id = @cur_member.id
       @item.cur_site = @cur_site
 
@@ -75,7 +75,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDatasetController < Applicatio
 
     def create
       @item = @model.new get_params
-      set_state
+      set_status
 
       if @item.save
         redirect_to @cur_node.url, notice: t("views.notice.saved")
@@ -90,7 +90,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDatasetController < Applicatio
 
     def update
       @item.attributes = get_params
-      set_state
+      set_status
 
       if @item.update
         redirect_to "#{@cur_node.url}#{@item.id}/", notice: t("views.notice.saved")
