@@ -11,6 +11,7 @@ class Opendata::App
   include Contact::Addon::Page
   include Cms::Addon::RelatedPage
   include Cms::Addon::GroupPermission
+  include Workflow::MemberPermission
 
   set_permission_name "opendata_apps"
 

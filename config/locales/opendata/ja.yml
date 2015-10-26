@@ -272,34 +272,49 @@ ja:
   cms_role:
     read_other_opendata_datasets: データセットの閲覧（全て）
     read_private_opendata_datasets: データセットの閲覧（所有）
+    read_member_opendata_datasets: データセットの閲覧（メンバー）
     edit_other_opendata_datasets: データセットの編集（全て）
     edit_private_opendata_datasets: データセットの編集（所有）
+    edit_member_opendata_datasets: データセットの編集（メンバー）
     delete_other_opendata_datasets: データセットの削除（全て）
     delete_private_opendata_datasets: データセットの削除（所有）
+    delete_member_opendata_datasets: データセットの削除（メンバー）
     release_other_opendata_datasets: データセットの公開（全て）
     release_private_opendata_datasets: データセットの公開（所有）
+    release_member_opendata_datasets: データセットの公開（メンバー）
     approve_other_opendata_datasets: データセットの承認（全て）
     approve_private_opendata_datasets: データセットの承認（所有）
+    approve_member_opendata_datasets: データセットの承認（メンバー）
     read_other_opendata_apps: アプリの閲覧（全て）
     read_private_opendata_apps: アプリの閲覧（所有）
+    read_member_opendata_apps: アプリの閲覧（メンバー）
     edit_other_opendata_apps: アプリの編集（全て）
     edit_private_opendata_apps: アプリの編集（所有）
+    edit_member_opendata_apps: アプリの編集（メンバー）
     delete_other_opendata_apps: アプリの削除（全て）
     delete_private_opendata_apps: アプリの削除（所有）
+    delete_member_opendata_apps: アプリの削除（メンバー）
     release_other_opendata_apps: アプリの公開（全て）
     release_private_opendata_apps: アプリの公開（所有）
+    release_member_opendata_apps: アプリの公開（メンバー）
     approve_other_opendata_apps: アプリの承認（全て）
     approve_private_opendata_apps: アプリの承認（所有）
+    approve_member_opendata_apps: アプリの承認（メンバー）
     read_other_opendata_ideas: アイデアの閲覧（全て）
     read_private_opendata_ideas: アイデアの閲覧（所有）
+    read_member_opendata_ideas: アイデアの閲覧（メンバー）
     edit_other_opendata_ideas: アイデアの編集（全て）
     edit_private_opendata_ideas: アイデアの編集（所有）
+    edit_member_opendata_ideas: アイデアの編集（メンバー）
     delete_other_opendata_ideas: アイデアの削除（全て）
     delete_private_opendata_ideas: アイデアの削除（所有）
+    delete_member_opendata_ideas: アイデアの削除（メンバー）
     release_other_opendata_ideas: アイデアの公開（全て）
     release_private_opendata_ideas: アイデアの公開（所有）
+    release_member_opendata_ideas: アイデアの公開（メンバー）
     approve_other_opendata_ideas: アイデアの承認（全て）
     approve_private_opendata_ideas: アイデアの承認（所有）
+    approve_member_opendata_ideas: アイデアの承認（メンバー）
 
   mongoid:
     models:

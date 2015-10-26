@@ -12,6 +12,7 @@ class Opendata::Dataset
   include Contact::Addon::Page
   include Cms::Addon::RelatedPage
   include Cms::Addon::GroupPermission
+  include Workflow::MemberPermission
 
   scope :formast_is, ->(word, *fields) {
     where("$and" => [{ "$or" => fields.map { |field| { field => word.to_s } } } ])
