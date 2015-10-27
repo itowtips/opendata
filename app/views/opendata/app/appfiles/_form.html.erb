@@ -1,5 +1,5 @@
 <%= jquery do %>
-<% if @dataset.allowed?(:release, @cur_user, site: @cur_site) %>
+<% if @app.allowed?(:release, @cur_user, site: @cur_site) %>
 $(".save").val("非公開保存");
 $("<input />").attr("type", "submit")
   .attr("name", "publish_save")
