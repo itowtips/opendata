@@ -1,7 +1,13 @@
+<%= jquery do %>
+$(".select-submit").on("change", function() {
+  $(this).closest("form").submit();
+});
+<% end %>
+
 <% @s = OpenStruct.new params[:s] %>
 <div class="search-form">
   <%= form_for :s, url: "", html: { class: "index-search", method: :get } do |f| %>
-    <%= f.select :poster, [["管理側投稿", "admin"], ["マイページ投稿", "public"]], include_blank: "" %>
+    <%= f.select :poster, [["管理側投稿", "admin"], ["マイページ投稿", "public"]], { include_blank: "" }, { class: "select-submit" } %>
     <%= f.text_field :keyword, style: "width: 300px;" %>
     <input type="submit" value="<%= t('views.button.search') %>" />
   <% end %>
