@@ -1,6 +1,6 @@
 class Opendata::Dataset
   include Cms::Model::Page
-  include Workflow::Addon::Approver
+  include ::Workflow::Addon::Approver
   include Opendata::Addon::Resource
   include Opendata::Addon::UrlResource
   include Opendata::Addon::Category
@@ -13,6 +13,8 @@ class Opendata::Dataset
   include Cms::Addon::RelatedPage
   include Cms::Addon::GroupPermission
   include Workflow::MemberPermission
+
+  set_permission_name "opendata_datasets"
 
   scope :formast_is, ->(word, *fields) {
     where("$and" => [{ "$or" => fields.map { |field| { field => word.to_s } } } ])

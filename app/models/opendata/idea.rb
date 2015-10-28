@@ -1,6 +1,6 @@
 class Opendata::Idea
   include Cms::Model::Page
-  include Workflow::Addon::Approver
+  include ::Workflow::Addon::Approver
   include Opendata::Addon::Comment
   include Opendata::Addon::Category
   include Opendata::Addon::Area

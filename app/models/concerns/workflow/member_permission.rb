@@ -11,6 +11,7 @@ module Workflow::MemberPermission
     public
       def allow(action, user, opts = {})
         s = super
+        return s unless s.selector["_id"].present?
         return s unless s.selector["group_ids"].present?
 
         site_id = opts[:site] ? opts[:site].id : criteria.selector["site_id"]

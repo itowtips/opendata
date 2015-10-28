@@ -1,6 +1,6 @@
 class Opendata::App
   include Cms::Model::Page
-  include Workflow::Addon::Approver
+  include ::Workflow::Addon::Approver
   include Opendata::Addon::Appfile
   include Opendata::Addon::Category
   include Opendata::Addon::Area

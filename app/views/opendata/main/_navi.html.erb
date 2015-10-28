@@ -20,7 +20,11 @@
     <% elsif @cur_node.route == "opendata/idea" %>
       <%= link_to :"mongoid.models.opendata/idea", opendata_ideas_path, class: "icon-node" %>
       <div class="narrow-page">
-        <%= link_to :"非公開",   opendata_ideas_closed_path, class: "icon-node" %>
+        <%= link_to :"非公開", opendata_ideas_closed_path, class: "icon-node" %>
+      </div>
+      <%= link_to :"mongoid.models.opendata/idea_comment", opendata_ideas_comments_path, class: "icon-node" %>
+      <div class="narrow-page">
+        <%= link_to :"非公開", opendata_idea_comments_closed_path, class: "icon-node" %>
       </div>
     <% else %>
       <% Opendata::Node::Dataset.site(@cur_site).each do |item| %>
@@ -54,10 +58,17 @@
   </nav>
 <% elsif @cur_node.route == "opendata/idea" %>
   <nav class="sub-menu">
-    <header><h1>承認</h1></header>
+    <header><h1>承認（アイデア）</h1></header>
     <div>
       <%= link_to :"依頼されたもの",  opendata_ideas_approve_path, class: "icon-node" %>
       <%= link_to :"申請したもの",  opendata_ideas_request_path, class: "icon-node" %>
+    </div>
+  </nav>
+  <nav class="sub-menu">
+    <header><h1>承認（コメント）</h1></header>
+    <div>
+      <%= link_to :"依頼されたもの", opendata_idea_comments_approve_path, class: "icon-node" %>
+      <%= link_to :"申請したもの", opendata_idea_comments_request_path, class: "icon-node" %>
     </div>
   </nav>
 <% end %>

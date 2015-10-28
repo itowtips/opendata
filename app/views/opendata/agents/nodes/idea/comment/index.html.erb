@@ -34,6 +34,10 @@
           <div class="text">
             <% if comment.comment_deleted %>
             <%= I18n.t("opendata.labels.delete_comment") %>
+            <% elsif comment.status == "request" %>
+            <%= "コメントは承認待ちです" %>
+            <% elsif comment.state == "closed" %>
+            <%= "コメントは非公開です" %>
             <% else %>
             <%= simple_format(h(comment.text)) %>
             <% end %>

@@ -10,6 +10,10 @@ SS::Application.routes.draw do
     resources :ideas, concerns: :deletion, module: :idea do
       resources :comments, concerns: :deletion
     end
+    get "idea_comments_approve" => "idea/idea_comments#index_approve"
+    get "idea_comments_request" => "idea/idea_comments#index_request"
+    get "idea_comments_closed" => "idea/idea_comments#index_closed"
+    resources :idea_comments, only: :index, module: :idea, as: :ideas_comments
     resources :idea_categories, concerns: :deletion, module: :idea
     resources :search_ideas, concerns: :deletion, module: :idea
   end

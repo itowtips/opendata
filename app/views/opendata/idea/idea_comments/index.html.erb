@@ -1,0 +1,44 @@
+<%= jquery do %>$("div#menu,div#menu-back").hide();<% end %>
+
+<%= render file: "_search" %>
+
+<table class="index">
+  <thead>
+    <tr>
+      <th class="text"><%= @model.t :text %></th>
+      <th class="idea"><%= "アイデア" %></th>
+      <td class="member_name"><%= @model.t :member_name %></td>
+      <th class="datetime"><%= @model.t :updated %></th>
+      <th class="datetime"><%= @model.t :deleted %></th>
+      <td class="state"><%= @model.t :state %></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+    <tr>
+      <td class="text">
+        <nav class="tap-menu">
+          <%= link_to :show, opendata_idea_comment_path(cid: @cur_node.id, idea_id: item.idea.id, id: item.id) if item.allowed?(:read, @cur_user, site: @cur_site)%>
+          <%= link_to :edit, edit_opendata_idea_comment_path(cid: @cur_node.id, idea_id: item.idea.id, id: item.id) if item.allowed?(:edit, @cur_user, site: @cur_site) %>
+          <%= link_to :delete, delete_opendata_idea_comment_path(cid: @cur_node.id, idea_id: item.idea.id, id: item.id) if item.allowed?(:delete, @cur_user, site: @cur_site) %>
+          <%= link_to :view_site, item.idea.full_url, target: :_blank if item.idea.public? %>
+        </nav>
+        <%= link_to item.text, opendata_idea_comment_path(cid: @cur_node.id, idea_id: item.idea.id, id: item.id) %>
+      </td>
+      <td class="text">
+        <%= link_to item.idea.name, opendata_idea_path(id: item.idea.id) %>
+      </td>
+      <td class="member_name"><%= item.get_member_name %></td>
+      <td class="datetime"><%= item.created.strftime("%Y/%m/%d %H:%M") %></td>
+      <td class="datetime">
+        <% if item.comment_deleted.present? %>
+        <%= item.comment_deleted.strftime("%Y/%m/%d %H:%M") %>
+        <% end %>
+      </td>
+      <td class="state"><%= item.label :status %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @items if @items.try(:current_page) %>
