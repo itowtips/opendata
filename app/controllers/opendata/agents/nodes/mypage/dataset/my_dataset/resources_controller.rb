@@ -10,6 +10,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
   before_action :set_model
   before_action :set_item, only: [:show, :edit, :update, :delete, :destroy]
   before_action :set_workflow
+  after_action :deliver_workflow_mail, only: [:create, :update]
 
   protected
     def dataset
@@ -43,6 +44,7 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
 
       @item.status = status
       @item.workflow = { member: @cur_member, route: @route, workflow_reset: true }
+      @deliver_mail = true if status = "request" && @dataset.status != "request"
     end
 
     def fix_params
@@ -59,6 +61,19 @@ class Opendata::Agents::Nodes::Mypage::Dataset::MyDataset::ResourcesController <
 
     def get_params
       params.require(:item).permit(permit_fields).merge(fix_params)
+    end
+
+    def deliver_workflow_mail
+      return unless @route
+      return unless @deliver_mail
+      args = {
+        m_id: @cur_member.id,
+        t_uid: @dataset.workflow_approvers.first[:user_id],
+        site: @cur_site,
+        item: @dataset,
+        url: ::File.join(@cur_site.full_url, opendata_dataset_path(cid: @cur_node.id, site: @cur_site.host, id: @dataset.id))
+      }
+      Workflow::Mailer.request_from_member_mail(args).deliver_now
     end
 
   public

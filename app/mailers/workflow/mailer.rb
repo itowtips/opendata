@@ -31,4 +31,14 @@ class Workflow::Mailer < ActionMailer::Base
 
       mail from: @from_user.email, to: @to_user.email
     end
+
+    def request_from_member_mail(args)
+      @from_user = Cms::Member.find(args[:m_id])
+      @to_user   = SS::User.find(args[:t_uid])
+      @subject   = "[#{I18n.t('workflow.mail.subject.request')}]#{args[:item].name} - #{args[:site].name}"
+      @item      = args[:item]
+      @url       = args[:url]
+
+      mail from: @to_user.email, to: @to_user.email
+    end
 end

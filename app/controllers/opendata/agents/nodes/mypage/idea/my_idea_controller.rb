@@ -8,6 +8,7 @@ class Opendata::Agents::Nodes::Mypage::Idea::MyIdeaController < ApplicationContr
   before_action :set_model
   before_action :set_item, only: [:show, :edit, :update, :delete, :destroy]
   before_action :set_workflow
+  after_action :deliver_workflow_mail, only: [:create, :update]
 
   protected
     def idea_node
@@ -32,10 +33,25 @@ class Opendata::Agents::Nodes::Mypage::Idea::MyIdeaController < ApplicationContr
       @item.workflow_member_id = @cur_member.id
       @item.cur_site = @cur_site
 
+      status_was = @item.status
       status = "closed"
       status = "request" if @route && params[:request].present?
       status = "public"  if !@route && params[:publish_save].present?
       @item.apply_status(status, member: @cur_member, route: @route, workflow_reset: true)
+      @deliver_mail = true if status = "request" && status_was != "request"
+    end
+
+    def deliver_workflow_mail
+      return unless @route
+      return unless @deliver_mail
+      args = {
+        m_id: @cur_member.id,
+        t_uid: @item.workflow_approvers.first[:user_id],
+        site: @cur_site,
+        item: @item,
+        url: ::File.join(@cur_site.full_url, opendata_dataset_path(cid: @cur_node.id, site: @cur_site.host, id: @item.id))
+      }
+      Workflow::Mailer.request_from_member_mail(args).deliver_now
     end
 
     def fix_params
